@@ -1,52 +1,115 @@
-// Get DOM elements
-const textInput = document.querySelector("#taskInput");
-const addBtn = document.querySelector("#addTask");
-const taskList = document.querySelector("#taskList");
+const dailyTaskInput = document.querySelector("#dailyTaskInput");
+const dailyAddBtn = document.querySelector("#dailyAddTask");
+const dailyTaskList = document.querySelector("#dailyTasks");
 
-// Retrieve tasks from localStorage or initialize an empty array
-let tasksArray = JSON.parse(localStorage.getItem("tasks")) || [];
+const weeklyTaskInput = document.querySelector("#weeklyTaskInput");
+const weeklyAddBtn = document.querySelector("#weeklyAddTask");
+const weeklyTaskList = document.querySelector("#weeklyTasks");
 
-// Initial render of the task list
-refreshList(tasksArray);
+let dailyTasksArray = JSON.parse(localStorage.getItem("dailyTasks")) || [];
+let weeklyTasksArray = JSON.parse(localStorage.getItem("weeklyTasks")) || [];
 
-function refreshList(list) {
-    // Clear existing list to avoid duplication
+function refreshList(taskList, tasksArray) {
     taskList.innerHTML = "";
-    // Add each task to the list
-    list.forEach(addToList);
+    tasksArray.forEach((task, index) => addToList(taskList, task, index));
 }
 
-function addToList(task) {
+function addToList(taskList, task, index) {
     const li = document.createElement('li');
-    li.innerHTML = `<span>${task}</span><span class="remove-btn">X</span>`;
+    li.dataset.index = index;
+    li.innerHTML = `
+        <span class="task-text">${task}</span>
+        <button class="remove-btn">X</button>
+    `;
     taskList.appendChild(li);
 }
 
-function createTask() {
-    const taskText = textInput.value.trim();
+function createTask(taskInput, tasksArray, storageKey, taskList) {
+    const taskText = taskInput.value.trim();
     if (taskText) {
         tasksArray.push(taskText);
-        localStorage.setItem("tasks", JSON.stringify(tasksArray));
-        addToList(taskText);
-        textInput.value = "";
+        localStorage.setItem(storageKey, JSON.stringify(tasksArray));
+        addToList(taskList, taskText, tasksArray.length - 1);
+        taskInput.value = "";
     }
 }
 
-function removeTask(task) {
-    const index = tasksArray.indexOf(task);
-    if (index !== -1) {
-        tasksArray.splice(index, 1);
-        localStorage.setItem("tasks", JSON.stringify(tasksArray));
-        refreshList(tasksArray);
+function removeTask(index, tasksArray, storageKey, taskList) {
+    tasksArray.splice(index, 1);
+    localStorage.setItem(storageKey, JSON.stringify(tasksArray));
+    refreshList(taskList, tasksArray);
+}
+
+function editTask(index, newText, tasksArray, storageKey, taskList) {
+    tasksArray[index] = newText;
+    localStorage.setItem(storageKey, JSON.stringify(tasksArray));
+    refreshList(taskList, tasksArray);
+}
+
+function handleTaskClick(e, tasksArray, storageKey, taskList) {
+    const target = e.target;
+    const li = target.closest('li');
+    const index = li.dataset.index;
+
+    if (target.classList.contains("remove-btn")) {
+        removeTask(index, tasksArray, storageKey, taskList);
+    } else if (target.classList.contains("task-text")) {
+        const taskText = li.querySelector('.task-text').textContent;
+        li.innerHTML = `
+            <input type="text" class="edit-input" value="${taskText}">
+            <button class="save-btn">Save</button>
+        `;
+        const editInput = li.querySelector('.edit-input');
+        const saveBtn = li.querySelector('.save-btn');
+        
+        editInput.focus();
+        editInput.setSelectionRange(editInput.value.length, editInput.value.length);
+
+        const saveChanges = () => {
+            const newText = editInput.value.trim();
+            if (newText) {
+                editTask(index, newText, tasksArray, storageKey, taskList);
+            } else {
+                removeTask(index, tasksArray, storageKey, taskList);
+            }
+        };
+
+        editInput.addEventListener('blur', saveChanges, { once: true });
+        saveBtn.addEventListener('click', saveChanges);
+        editInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                saveChanges();
+            }
+        });
     }
 }
 
-// Add event listeners
-addBtn.addEventListener("click", createTask);
-
-taskList.addEventListener("click", (e) => {
-    if (e.target.classList.contains("remove-btn")) {
-        const task = e.target.previousSibling.textContent;
-        removeTask(task);
+dailyAddBtn.addEventListener("click", () => createTask(dailyTaskInput, dailyTasksArray, "dailyTasks", dailyTaskList));
+dailyTaskInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        createTask(dailyTaskInput, dailyTasksArray, "dailyTasks", dailyTaskList);
     }
 });
+dailyTaskList.addEventListener("click", (e) => handleTaskClick(e, dailyTasksArray, "dailyTasks", dailyTaskList));
+
+weeklyAddBtn.addEventListener("click", () => createTask(weeklyTaskInput, weeklyTasksArray, "weeklyTasks", weeklyTaskList));
+weeklyTaskInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        createTask(weeklyTaskInput, weeklyTasksArray, "weeklyTasks", weeklyTaskList);
+    }
+});
+weeklyTaskList.addEventListener("click", (e) => handleTaskClick(e, weeklyTasksArray, "weeklyTasks", weeklyTaskList));
+
+// Initial render of the task lists
+refreshList(dailyTaskList, dailyTasksArray);
+refreshList(weeklyTaskList, weeklyTasksArray);
+
+
+// TODO
+//
+// Duplicate tasks.
+// Reorder tasks with arrows.
+// Add new tasks from the bottom.
+// Add GSAP to project.
+// Move tasks from one list to another.
+// Add previous days list.

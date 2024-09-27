@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+	// Daily Tasks
 	const dailyTaskInput = document.querySelector("#dailyTaskInput");
 	const dailyAddBtn = document.querySelector("#dailyAddTask");
 	const dailyTaskList = document.querySelector("#dailyTasks");
@@ -6,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const previousDayList = document.querySelector("#previousDay");
 	const copyDayBtn = document.querySelector("#copyDay");
 
+	// Weekly Tasks
 	const weeklyTaskInput = document.querySelector("#weeklyTaskInput");
 	const weeklyAddBtn = document.querySelector("#weeklyAddTask");
 	const weeklyTaskList = document.querySelector("#weeklyTasks");
@@ -13,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const previousWeekList = document.querySelector("#previousWeek");
 	const copyWeekBtn = document.querySelector("#copyWeek");
 
+	// Reminders
 	const remindersInput = document.querySelector("#remindersInput");
 	const reminderAddBtn = document.querySelector("#addReminder");
 	const remindersList = document.querySelector("#remindersList");
@@ -236,4 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	refreshList(dailyTaskList, dailyTasksArray);
 	refreshList(weeklyTaskList, weeklyTasksArray);
+
+	refreshList(remindersList, remindersArray);
 });

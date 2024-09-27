@@ -38,9 +38,9 @@ main {
 	padding: 40px;
 	border-radius: 14px;
 	width: 100%;
-	max-width: 1200px;
+	max-width: 1320px;
 	display: flex;
-	gap: 20px;
+	gap: 40px;
 }
 .tasks-wrapper {
 	width: 70%;
@@ -54,9 +54,11 @@ main {
 	display: flex;
 	gap: 10px;
 }
-.task-section > div:nth-child(1),
+.task-section > div:nth-child(1) {
+	width: 40%;
+}
 .task-section > div:nth-child(3) {
-	width: 45%;
+	width: 50%;
 }
 .task-section > div:nth-child(2) {
 	width: 10%;
@@ -92,7 +94,8 @@ main {
 	padding-left: 20px;
 }
 #dailyTasks .task-text,
-#weeklyTasks .task-text {
+#weeklyTasks .task-text,
+#remindersList .task-text {
 	padding-left: 10px;
 }
 
@@ -168,7 +171,8 @@ button * {
 .task-list li:hover button:not(.save-btn) {
 	color: var(--secondary);
 }
-.task-section .task-list li button:hover {
+.task-section .task-list li button:hover,
+.reminders-section .task-list li button:hover {
 	color: var(--text);
 }
 .task-list li button svg {

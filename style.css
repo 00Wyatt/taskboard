@@ -1,43 +1,198 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
+:root {
+	--primary: #141924;
+	--secondary: #232c3d;
+	--secondary-alt: #293347;
+	--tertiary: #334059;
+	--tertiary-alt: #455878;
+	--accent: #0ca3e9;
+	--accent-light: #21c8f6;
+	--accent-dark: #1b55ac;
+	--text: #ffffff;
+	--text-dark: #8ea5c2;
+}
+
+/* Boilerplate */
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
 body {
-	font-family: Roboto, sans-serif;
+	background: var(--primary);
+	color: var(--text);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
-
-main {
-	background: #fafafa;
-	color: #0c0c0c;
-	padding: 40px;
+body * {
+	font-family: Roboto, sans-serif;
 }
 
+/* Page */
+main {
+	background: var(--secondary);
+	color: var(--text);
+	padding: 40px;
+	border-radius: 14px;
+	width: 100%;
+	max-width: 1200px;
+	display: flex;
+	gap: 20px;
+}
+.tasks-wrapper {
+	width: 70%;
+}
+.reminders-section {
+	width: 30%;
+}
+
+/* Task sections */
+.task-section {
+	display: flex;
+	gap: 10px;
+}
+.task-section > div:nth-child(1),
+.task-section > div:nth-child(3) {
+	width: 45%;
+}
+.task-section > div:nth-child(2) {
+	width: 10%;
+	display: flex;
+	justify-content: center;
+	align-items: start;
+	padding-top: 70px;
+}
+
+/* Tasks */
 .task-list {
 	list-style: none;
 	padding-left: 0;
 }
 .task-list li {
-	background: #f1f1f1;
+	min-height: 60px;
+	background: var(--tertiary);
 	padding: 10px;
+	border-radius: 14px;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
+}
+.task-list li div:first-child {
+	display: flex;
+	align-items: center;
 }
 .task-list li:not(:last-child) {
-	margin-bottom: 4px;
+	margin-bottom: 6px;
+}
+#previousDay .task-text,
+#previousWeek .task-text {
+	padding-left: 20px;
+}
+#dailyTasks .task-text,
+#weeklyTasks .task-text {
+	padding-left: 10px;
 }
 
-.move-up-btn,
-.move-down-btn,
-.duplicate-btn,
-.remove-btn {
+/* Inputs */
+input {
+	color: var(--text);
+	font-size: 16px;
+	border-top: unset;
+	border-left: unset;
+	border-right: unset;
+	border-bottom: 2px solid var(--tertiary);
+	padding: 8px 10px;
+	background: none;
+}
+input:focus {
+	outline: none;
+	border-color: var(--tertiary-alt);
+}
+.edit-input {
+	margin: 2px 15px 0 24px;
+	width: 100%;
+}
+.add-task {
+	display: flex;
+}
+.add-task > input {
+	flex: 1;
+}
+.add-task > input::placeholder {
+	color: var(--text-dark);
+}
+
+/* Buttons */
+button {
 	cursor: pointer;
-	font-weight: 500;
-	transition: 200ms;
+	background: var(--tertiary);
+	color: var(--text-dark);
+	transition: all 100ms linear;
 }
-.duplicate-btn:hover {
-	color: #10c455;
+button * {
+	transition: all 100ms linear;
 }
-.remove-btn:hover {
-	color: #dc1212;
+.add-task button,
+.copy-btns button {
+	border: none;
+	border-radius: 7px;
+}
+.add-task button {
+	background: var(--accent);
+	color: var(--text);
+	padding: 10px 20px;
+}
+.add-task button:hover {
+	background: #21c8f6;
+}
+.copy-btns button {
+	background: var(--tertiary);
+	padding: 6px 12px;
+}
+.copy-btns button:hover {
+	background: var(--tertiary-alt);
+	color: var(--text);
+}
+.copy-btns button svg {
+	vertical-align: middle;
+	transition: none;
+}
+.task-list li button {
+	color: var(--tertiary);
+	border: none;
+	background: none;
+}
+.task-list li:hover button:not(.save-btn) {
+	color: var(--secondary);
+}
+.task-section .task-list li button:hover {
+	color: var(--text);
+}
+.task-list li button svg {
+	pointer-events: none;
+}
+.order-btns {
+	display: flex;
+	flex-direction: column;
+}
+.option-btns {
+	display: flex;
+}
+.option-btns button {
+	padding: 4px;
+}
+.option-btns svg {
+	vertical-align: middle;
+}
+.task-list li .save-btn {
+	background: var(--secondary);
+	color: var(--text-dark);
+	padding: 6px 10px;
+	border-radius: 7px;
+}
+.task-list li .save-btn:hover {
+	background: var(--secondary-alt);
 }

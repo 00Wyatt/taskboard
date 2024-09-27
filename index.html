@@ -3,25 +3,105 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Daily List</title>
+		<title>TaskBoard</title>
 		<link rel="stylesheet" href="style.css" />
 		<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 	</head>
 	<body>
+		<header>
+			<h1>TaskBoard</h1>
+		</header>
 		<main>
-			<h1>Tasks</h1>
-			<h2>Daily List</h2>
-			<ul id="dailyTasks" class="task-list"></ul>
-			<div>
-				<input id="dailyTaskInput" type="text" placeholder="Enter a task..." />
-				<button id="dailyAddTask">Add Task</button>
+			<div class="tasks-wrapper">
+				<section class="task-section">
+					<div>
+						<h2>Yesterday</h2>
+						<ul id="previousDay" class="task-list"></ul>
+					</div>
+					<div class="copy-btns">
+						<button id="copyDay">
+							<svg
+								width="20"
+								height="20"
+								viewBox="0 0 20 20"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M3 10L9 4M3 10L9 16M3 10H17"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						</button>
+					</div>
+					<div>
+						<h2>Daily List</h2>
+						<ul id="dailyTasks" class="task-list"></ul>
+						<div class="add-task">
+							<input
+								id="dailyTaskInput"
+								type="text"
+								placeholder="Enter a task..."
+							/>
+							<button id="dailyAddTask">Add Task</button>
+						</div>
+					</div>
+				</section>
+				<section class="task-section">
+					<div>
+						<h2>Last Week</h2>
+						<ul id="previousWeek" class="task-list"></ul>
+					</div>
+					<div class="copy-btns">
+						<button id="copyWeek">
+							<svg
+								width="20"
+								height="20"
+								viewBox="0 0 20 20"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M3 10L9 4M3 10L9 16M3 10H17"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						</button>
+					</div>
+					<div>
+						<h2>Weekly List</h2>
+						<ul id="weeklyTasks" class="task-list"></ul>
+						<div class="add-task">
+							<input
+								id="weeklyTaskInput"
+								type="text"
+								placeholder="Enter a task..."
+							/>
+							<button id="weeklyAddTask">Add Task</button>
+						</div>
+					</div>
+				</section>
 			</div>
-			<h2>Weekly List</h2>
-			<ul id="weeklyTasks" class="task-list"></ul>
-			<div>
-				<input id="weeklyTaskInput" type="text" placeholder="Enter a task..." />
-				<button id="weeklyAddTask">Add Task</button>
-			</div>
+			<section class="reminders-section">
+				<div>
+					<h2>Reminders</h2>
+					<ul id="remindersList" class="task-list"></ul>
+					<div class="add-task">
+						<input
+							id="remindersInput"
+							type="text"
+							placeholder="Enter a reminder..."
+						/>
+						<button id="addReminder">Add</button>
+					</div>
+				</div>
+			</section>
 		</main>
 		<script src="script.js"></script>
 	</body>
